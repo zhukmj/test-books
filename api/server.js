@@ -16,6 +16,13 @@ app.use((req, res) => {
 app.use((err, req, res, next) => {
   console.log(err);
 
+  // Handle body parser errors
+  if (err.type === 'entity.parse.failed') {
+    return res.status(400).json({
+      message: 'Body has not valid JSON',
+    });
+  }
+
   return res.status(500).send('Internal server error');
 });
 
